@@ -35,16 +35,19 @@ def signup(request):
 
             if x == 0:  # if hospital
                 flag = 0
+                print(flag)
                 hospital_user = HospitalProfile(username=username, password=password)
                 hospital_user.save()
 
             elif x == 1:  # if supplier
                 flag = 1
+                print(flag)
                 supplier_user = SupplierProfile(username=username, password=password)
                 supplier_user.save()
 
+            return render(request, 'authenticate/home.html')
             #else:
              #   return render(request, 'signup.html', {'error': "Passwords don't match"})
 
         else:
-            return render(request, 'signup.html')
+            return render(request, 'authenticate/signup.html')

@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-    < method="post">
+    <form method="post">
     {% csrf_token %}
         USERNAME:<br>
         <input type="text" name="username">
@@ -18,7 +18,7 @@
 
         <br><br>
         <input type="submit" value="Submit">
-
+    </form>
 
 </body>
 </html>
