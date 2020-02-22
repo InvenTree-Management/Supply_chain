@@ -16,17 +16,18 @@
    - Verifies the new remote URL
    
 5) $ git pull origin master
-   Then pull the all code into the round2 folder from the GitHub
+   - Then it pulls the all code into the InvenTree folder from GitHub
 
 6) $ git add .
    - Adds the files in the local repository and stages them for commit. To unstage a file, use 'git reset HEAD YOUR-FILE'.
    
 7) $ git commit -m "Initial commit"
-   Then Commit into it by this above command
+   - Message should be in accordance with the changes u've made in your code
+   - Then Commit into it by this above command
    
 8) $ git push origin master
-   Then push the all changes into the GitHub by this command
+   - Then push the all changes into the GitHub by this command
    
 9) give your username and password to it
-   then it will push all your changes into GitHub
+   - then it will push all your changes into GitHub
    
