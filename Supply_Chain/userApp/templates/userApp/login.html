@@ -1,27 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <title>SIGN UP</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <center><h1>
-    <form method="post">
-    {% csrf_token %}
-        USERNAME:<br>
-        <input type="text"  name="username">
-        <br>
-        PASSWORD:<br>
-        <input type="text"  name="password">
-        <br>
-        <input type="radio" name = "0" value="0">Hospital</input>
-        <input type="radio" name = "1" value="1">Supplier</input>
+    <div class = "container-fluid">
+        <div class="row" style="height:7vh;border:2px solid black;background-color: rgb(66, 64, 64);">
+            <div class = "col-lg-2" style = "display:flex;border:2px black;align-items: center;font-size:15px;color: white;">
+              HOSPITAL
+            </div>
+            <div class = "col-lg-10" style = "display:flex;border:2px black;align-items: center;color: white;">
+              SUPPLIERS
+            </div>
 
-        <br><br>
-        <input type="submit" value="Submit">
-    </form>
-    </h1>
-    </center>
+        </div>
+        <div class ="row" style="border:1px none black;">
+          <div class = "col-lg-12"style="height:86vh">
+            <div class="row" style="padding: 70px">
+              <div class="login mt-1" style="max-width: 340px;width: 90%;margin: 0 auto;border-radius:5px;padding-bottom:100px;box-shadow: 0 1rem 1rem 0 rgba(0, 0, 0, 0.1);background: white">
+                <ul class="nav nav-tabs">
+                      <li class="active  a" >
+                        <a class="nav-link active b" data-toggle="tab" href="#login">Sign In</a>
+                      </li>
+                      <li class="active a" >
+                        <a class="nav-link b" data-toggle="tab" href="#register">Sign Up</a>
+                      </li>
+                </ul>
+                  <div class="tab-content"style = "border: none;">
+                    <div id="login"class="tab-pane active">
+                     <form class="form"  method="post" id = "for" style="padding-left:40px;padding-right:40px;padding-top: 40px;">
+                         {% csrf_token %}
+                      <select name = "type">
+                        <opton id="select" value = "-1">select user type</opton>
+                        <option name = "user_type" id = "0" value="Hospital">Hospital</option>
+                        <option name = "user_type" id = "1" value="Suppliers">Suppliers</option>
+                      </select>
+                        <div class="form-group mt-5">
+                          <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-user"></i>
+                          </span>
 
+                          <input type="text" name="username" required id = "user"  class="form-control"placeholder="Username" onfocus="placeholder=''" onblur="placeholder='Username'" autocomplete="off">
+                        </div>
+                        <div class="form-group mt-3">
+
+                          <input type="password" name="password" required min-length="4" id = "pass"  class="form-control"placeholder="Password" onfocus="placeholder=''" onblur="placeholder='Password'" autocomplete="off">
+                        </div>
+                        <input type="submit" name="submit" value="submit" class="btn btn-block" style="color:white;box-shadow: 0 0.5rem 0.5rem 0 rgba(0, 0, 0, 0.1);background:rgb(71, 68, 255);margin-top: 100px">
+                      </form>
+                    </div>
+                    <div id="register"class="tab-pane fade">
+                      <form class="form" action="" method="post" style="padding-left:40px;padding-right:40px;padding-top: 40px;">
+                        {% csrf_token %}
+                          <select name = "type">
+                          <opton id="selectr" value = "-1">select user type</opton>
+                          <option name = "user_type" value="Hospital">Hospital</option>
+                          <option name = "user_type" value="Suppliers">Suppliers</option>
+                        </select>
+                        <div class="form-group mt-4">
+                          <input type="text" name="fname" required id = "username" class="form-control" placeholder="Name" onfocus="placeholder=''" onblur="placeholder='Name'" autocomplete="off">
+                        </div>
+                        <div class="form-group mt-4">
+                          <input type="text" name="username"  required id = "user"class="form-control"  placeholder="Username" onfocus="placeholder=''" onblur="placeholder='Username'" autocomplete="off">
+                        </div>
+                        <div class="form-group mt-4">
+                          <input type="email" name="email"  required id = "email"class="form-control"  placeholder="Email" onfocus="placeholder=''" onblur="placeholder='Email'" autocomplete="off">
+                        </div>
+                        <div class="form-group mt-4">
+                          <input type="textarea" name="Address"  required id = "addr"class="form-control"  placeholder="Address" onfocus="placeholder=''" onblur="placeholder='Address'" autocomplete="off">
+                        </div>
+                        <div class="form-group mt-4">
+                          <input type="text" name="phone" id = "username" class="form-control" placeholder="Mobile No" onfocus="placeholder=''" onblur="placeholder='Mobile No'" maxlength="10" minlength="10" autocomplete="off">
+                        </div>
+                        <div class="form-group mt-4">
+                          <input type="password" name="password" required minlength="4" id = "password" class="form-control" placeholder="Password" onfocus="placeholder=''" onblur="placeholder='Password'" autocomplete="off">
+                        </div>
+                        <input type="submit" name="submit_reg" value="submit" class="btn btn-block  mt-5" style="color: white;box-shadow: 0 0.5rem 0.5rem 0 rgba(0, 0, 0, 0.1);background:rgb(71, 68, 255)">
+                      </form>
+                    </div>
+                  </div>
+                </div>
+          </div>
+        </div>
+        </div>
+        <div class = "row " style="height:7vh;border:2px solid black; background-color: rgb(2, 1, 1);" >
+          <div class = "col-lg-12" style = "display: flex;justify-content: center; align-items: center;font-size: 15px;color: white;">Hospital Inventory Management</div>
+        </div>
+
+    </div>
 </body>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+  if({error}) {
+     alert("Invalid credentials");
+  }
+  }, false
+  );
+</script>
 </html>
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Title</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <center><h1>-->
+<!--    <form method="post">-->
+<!--    {% csrf_token %}-->
+<!--        USERNAME:<br>-->
+<!--        <input type="text"  name="username">-->
+<!--        <br>-->
+<!--        PASSWORD:<br>-->
+<!--        <input type="text"  name="password">-->
+<!--        <br>-->
+<!--        <input type="radio" name = "0" value="0">Hospital</input>-->
+<!--        <input type="radio" name = "1" value="1">Supplier</input>-->
+
+<!--        <br><br>-->
+<!--        <input type="submit" value="Submit">-->
+<!--    </form>-->
+<!--    </h1>-->
+<!--    </center>-->
+
+<!--</body>-->
+<!--</html>-->

@@ -25,27 +25,29 @@ def signup(request):
     else:
         if request.method == 'POST':
             # if request.POST['password'] == request.POST['password again']:
-            username = request.POST.get('username')
-            password = request.POST.get('password')
-            x = request.POST.get('optradio')
+            _username = request.POST.get('username')
+            _password = request.POST.get('password')
+            user_type = request.POST.get('user_type')
 
-            if x == 0:  # if hospital
+            if not user_type:              # if hospital
                 flag = 0
                 print(flag)
-                hospital_user = HospitalProfile(username=username, password=password)
+                user = User.objects.create_user(username=_username, password=_password)
+                hospital_user = HospitalProfile(user=user)
                 hospital_user.save()
 
-            elif x == 1:  # if supplier
+            else:  # if supplier
                 flag = 1
                 print(flag)
-                supplier_user = SupplierProfile(username=username, password=password)
+                user = User.objects.create_user(username=_username, password=_password)
+                supplier_user = SupplierProfile(user=user)
                 supplier_user.save()
 
             return HttpResponse("You have successfully signed in !!")
             # else:
             #   return render(request, 'signup.html', {'error': "Passwords don't match"})
 
-        if request.method == 'GET':
+        else:
             return render(request, "userApp/login.html")
 
 
