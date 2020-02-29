@@ -1,5 +1,18 @@
 # Supply_chain
 
+
+#UPDATE 02
+
+- authentication of phone, email, address (for both hospital and supplier)
+- appending username in url (for both)
+- testing of items model
+- homepage of hospital and supplier
+- finding templates
+- STARTING VIEWS
+
+
+# UPDATE 01
+
 --> These are the steps you need to follow for setting your git with this project's repository..
 
 Create a empty folder in environment folder("myenv" in my case) and name it as "InvenTree".
