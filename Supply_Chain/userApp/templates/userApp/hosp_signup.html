@@ -1,7 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
+  <title>Hospital signup</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <style>
 body {font-family: Arial, Helvetica, sans-serif;}
 form {border: 3px solid #f1f1f1;}
@@ -41,12 +47,6 @@ button:hover {
 
 }
 
-.class2{
-  width: 200px;
-  padding: 15px;
-
-}
-
 span.psw {
   float: right;
   padding-top: 16px;
@@ -62,23 +62,40 @@ span.psw {
      width: 100%;
   }
 }
+
 </style>
+
 </head>
 <body>
 
 <center>
 <form method="post">
-  {% csrf_token%}
-<h2>Login Form</h2>
+  {% csrf_token %}
+<h2>Hospital Signup</h2>
 
   <div class="container">
-    <label for="uname"><b>Username</b></label>
+
     <input type="text" placeholder="Enter Username" name="username" required>
 
-    <label for="psw"><b>Password</b></label>
+    <input type="text" placeholder="Enter name" name="name_hosp" required>
+
+    <input type="text" placeholder="Enter Phone no" name="phone" required>
+
+    <input type="text" placeholder="Enter Email id" name="email" required>
+
+    <input type="text" placeholder="Enter Address" name="address" required>
+
     <input type="password" placeholder="Enter Password" name="password" required>
 
-    <button type="submit" name="submit" value="login">Login</button>
+    <select name = "type">
+       <opton id="selectr" value = "-1">select a Supplier</opton>
+       {% for ele in list %}
+        <option name = "user_type" value="{{ ele }}">{{ ele }}</option>
+      {% endfor %}
+<!--        <option name = "user_type" value="Suppliers">Suppliers</option>-->
+    </select>
+
+    <button type="submit">Sign up</button>
     <label>
       <input type="checkbox" checked="checked" name="remember"> Remember me
     </label>
@@ -86,15 +103,9 @@ span.psw {
 
   <div class="container" style="background-color:#f1f1f1">
     <button type="button" class="cancelbtn">Cancel</button>
-    <span class="psw">Forgot <a href="#">password?</a></span>
   </div>
-
 </form>
-  <form method="post">
-    {% csrf_token %}
-    <button class="class2" type="submit" name="submit" value="hosp">New Hospital user</button><br>
-    <button type="submit" class="class2" name="submit" value="supp">New Supplier user</button>
-  </form>
+
 </center>
 
 </body>

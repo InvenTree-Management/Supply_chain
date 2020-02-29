@@ -4,31 +4,37 @@ from django.contrib.auth.models import User
 
 class HospitalProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    supplier = models.CharField(max_length=100)
     phone_no = models.CharField(max_length=100)
     address = models.CharField(max_length=100)
     hospital_code = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.user.username
+        return self.user.first_name
 
 
 class SupplierProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    hospital = models.ForeignKey(HospitalProfile, on_delete=models.CASCADE)
+    hospital = models.ManyToManyField(HospitalProfile, null=True, blank=True,)
     phone_no = models.CharField(max_length=100)
     address = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.user.username
+        return self.user.username + '-' + self.phone_no
 
 
 class ItemCategory(models.Model):
     item_category = models.CharField(max_length=100)
 
+    class Meta:
+        verbose_name_plural = "ItemCategories"
+
+    def __str__(self):
+        return self.item_category
+
 
 class Item(models.Model):
     category = models.ForeignKey(ItemCategory, on_delete=models.CASCADE)
+    hospital = models.ForeignKey(HospitalProfile, on_delete=models.CASCADE)
     item_name = models.CharField(max_length=100)
     price = models.IntegerField(default=0)
     item_code = models.CharField(max_length=50)
@@ -40,55 +46,17 @@ class Item(models.Model):
         return self.item_name + '-' + self.item_code
 
 
-class HospitalCategory(models.Model):
-    hospital = models.ForeignKey(HospitalProfile, on_delete=models.CASCADE)
-    category = models.ForeignKey(ItemCategory, on_delete=models.CASCADE)
-
-
-class SupplierCategory(models.Model):
-    supplier = models.ForeignKey(SupplierProfile, on_delete=models.CASCADE)
-    category = models.ForeignKey(ItemCategory, on_delete=models.CASCADE)
-
-
-class HospitalItems(models.Model):
-    item_category = models.ForeignKey(HospitalCategory, on_delete=models.CASCADE)
+class Order(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
-
-
-class SupplierItems(models.Model):
-    item_category = models.ForeignKey(SupplierCategory, on_delete=models.CASCADE)
-    item = models.ForeignKey(Item, on_delete=models.CASCADE)
-
-
-class HospitalOrder(models.Model):
-    requested = models.DateTimeField(null=True, max_length=100)
-    received = models.DateTimeField(null=True, max_length=100)
-    item = models.ForeignKey(Item, on_delete=models.CASCADE)
-    quantity_requested = models.IntegerField(default=0)
-    HospitalStatus = models.TextField(max_length=100)
+    quantity = models.IntegerField(default=0)
+    supplier = models.CharField(max_length=40)      # sender
+    hospital = models.CharField(max_length=40)      # receiver
+    hospital_code = models.CharField(max_length=20)
+    order_time = models.DateTimeField(null=True)
+    delivery_time = models.DateTimeField(null=True)
 
     RECEIVED = 'REC'
     REQUESTED = 'REQ'
-
-    STATUS_CHOICES = [
-        (RECEIVED, 'Received'),
-        (REQUESTED, 'Requested'),
-    ]
-
-    SupplierStatus = models.CharField(max_length=3, choices=STATUS_CHOICES, default=REQUESTED)
-
-    def __str__(self):
-        return self.item_name + '-' + self.quantity_requested
-
-
-class SupplierOrder(models.Model):
-    received = models.DateTimeField(null=True, max_length=100)
-    dispatched = models.DateTimeField(null=True, max_length=100)
-    item = models.ForeignKey(Item, on_delete=models.CASCADE)
-    quantity_dispatched = models.IntegerField(default=0)
-    hospital_code = models.CharField(max_length=100)
-
-    RECEIVED = 'REC'
     DISPATCHED = 'DIS'
     PENDING = 'PEN'
     DELIVERED = 'DEL'
@@ -98,9 +66,11 @@ class SupplierOrder(models.Model):
         (DISPATCHED, 'Dispatched'),
         (PENDING, 'Pending'),
         (DELIVERED, 'Delivered'),
+        (REQUESTED, 'Requested'),
     ]
-
-    SupplierStatus = models.CharField(max_length=3, choices=STATUS_CHOICES, default=RECEIVED)
+    hosp_status = models.CharField(max_length=5, choices=STATUS_CHOICES, default='NA')
+                            # five types of status : REC, REQ, DIS, PEN, DLV
+    supp_status = models.CharField(max_length=5, choices=STATUS_CHOICES, default='NA')
 
     def __str__(self):
-        return self.item.name
+        return self.item.name + '-' + self.quantity

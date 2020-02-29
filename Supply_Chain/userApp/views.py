@@ -1,68 +1,78 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from .models import *
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 
 flag = 0  # for hospital
 
 
-def signup(request):
-    if request.user.is_authenticated:
-        global flag
-        if flag == 0:  # we are checking for hospital
-            try:
-                hospital_user = HospitalProfile.objects.get(user=request.user)
-            except HospitalProfile.DoesNotExist:
-                hospital_user = HospitalProfile()
-
-        elif flag == 1:  # we are checking for supplier
-            try:
-                supplier_user = SupplierProfile.objects.get(user=request.user)
-
-            except SupplierProfile.DoesNotExist:
-                supplier_user = SupplierProfile()
-
-    else:
-        if request.method == 'POST':
-            # if request.POST['password'] == request.POST['password again']:
+def homepage(request):
+    if request.method == 'POST':
+        opt = request.POST.get('submit')
+        if opt == 'login':
             _username = request.POST.get('username')
             _password = request.POST.get('password')
-            user_type = request.POST.get('user_type')
-
-            if not user_type:              # if hospital
-                flag = 0
-                print(flag)
-                user = User.objects.create_user(username=_username, password=_password)
-                hospital_user = HospitalProfile(user=user)
-                hospital_user.save()
-
-            else:  # if supplier
-                flag = 1
-                print(flag)
-                user = User.objects.create_user(username=_username, password=_password)
-                supplier_user = SupplierProfile(user=user)
-                supplier_user.save()
-
-            return HttpResponse("You have successfully signed in !!")
-            # else:
-            #   return render(request, 'signup.html', {'error': "Passwords don't match"})
-
+            user = authenticate(username=_username, password=_password)
+            login(request, user)
+            if user is not None:
+                return HttpResponse("You have successfully signed in !!")
+            else:
+                return render(request, 'userApp/login.html')
+        elif opt == 'hosp':
+            return HttpResponseRedirect(reverse('hospital_signup'))
         else:
-            return render(request, "userApp/login.html")
+            return HttpResponseRedirect(reverse('supplier_signup'))
+    else:
+        return render(request, 'userApp/login.html')
+
+
+def supplier_signup(request):
+    if request.method == 'POST':
+        _name = request.POST.get('name')
+        _username = request.POST.get('username')
+        _password = request.POST.get('password')
+        _phone = request.POST.get('phone')
+        _email = request.POST.get('email')
+        _address = request.POST.get('address')
+        user = User.objects.create_user(username=_username, password=_password, email=_email,
+                                        first_name=_name)
+        user.save()
+        supplier_user = SupplierProfile(user=user, phone_no=_phone, address=_address)
+        supplier_user.save()
+        return HttpResponseRedirect(reverse('supplier_home'))
+
+    else:
+        return render(request, 'userApp/supp_signup.html')
+
+
+def hospital_signup(request):
+    if request.method == 'POST':
+        _name = request.POST.get('name_hosp')
+        _username = request.POST.get('username')
+        _password = request.POST.get('password')
+        _phone = request.POST.get('phone')
+        _email = request.POST.get('email')
+        _address = request.POST.get('address')
+        _supplier = request.POST.get('')
+        user = User.objects.create_user(username=_username, password=_password, email=_email)
+        user.first_name = _name
+        user.save()
+        hospital_user = HospitalProfile(user=user, phone_no=_phone, address=_address)
+        hospital_user.save()
+        return HttpResponseRedirect(reverse('hospital_home'))
+
+    else:
+        supp_list = SupplierProfile.objects.values_list('user', flat=True)
+        return render(request, 'userApp/hosp_signup.html', context={'list': supp_list})
 
 
 def hospital_home(request):
     if request.method == 'GET':
+        user = request.user
         return render(request, 'userApp/hosp_home.html')
 
 
-def supplier(request):
-    if request.method.get == 'POST':
-        return HttpResponse('Supplier added successfully')
-    else:
-        list = {}
-        supplier = SupplierProfile.objects.all()
-        for ele in supplier:
-            list.append(ele.username)
-        context = {'supplier_list': list}
-        return render(request, 'userApp/supplier.html', context)
+def supplier_home(request):
+    if request.method == 'GET':
+        return render(request, 'userApp/supp_home.html')
