@@ -1,10 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
     <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-
+<form class="form" action="" method="post" style="padding-left:40px;padding-right:40px;padding-top: 40px;">
+    {% csrf_token %}
+    <select name="hospital">
+        {% for ele in list %}
+        <p>
+            <option value={{ ele.pk }}>ele.username</option>
+        </p>
+        {{ forloop.counter }} : {{ele.username}}
+        {% endfor %}
+        <button name="hosp" value="tyy"></button>
+        <!--        <option  value="Suppliers">Suppliers</option>-->
+    </select>
+    <button type="submit" height="40px" width="50px" name="submit" value="sign_up"></button>
+</form>
 </body>
 </html>

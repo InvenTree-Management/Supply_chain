@@ -7,15 +7,15 @@ class HospitalProfile(models.Model):
     supplier = models.CharField(max_length=100)
     phone_no = models.CharField(max_length=100)
     address = models.CharField(max_length=100)
-    hospital_code = models.CharField(max_length=100)
+    hospital_code = models.CharField(max_length=100, null=True)
 
     def __str__(self):
-        return self.user.username
+        return self.user.usernames
 
 
 class SupplierProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    hospital = models.ForeignKey(HospitalProfile, on_delete=models.CASCADE)
+    hospital = models.ForeignKey(HospitalProfile, on_delete=models.CASCADE, null=True)
     phone_no = models.CharField(max_length=100)
     address = models.CharField(max_length=100)
 
