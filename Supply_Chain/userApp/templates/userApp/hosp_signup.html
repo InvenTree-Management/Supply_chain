@@ -12,7 +12,7 @@
 body {font-family: Arial, Helvetica, sans-serif;}
 form {border: 3px solid #f1f1f1;}
 
-input[type=text], input[type=password] {
+input[type=text], input[type=password], input[type=email] {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -75,24 +75,28 @@ span.psw {
 
   <div class="container">
 
-    <input type="text" placeholder="Enter Username" name="username" required>
+    <input type="text" placeholder="Enter Username" id ="username" name="username" required>
 
-    <input type="text" placeholder="Enter name" name="name_hosp" required>
+    <input type="text" placeholder="Enter name" id="name" name="name_hosp" required autocomplete="off"
+           oninvalid="this.setCustomValidity('Enter Valid Hospital Name')" ; oninput="this.setCustomValidity('')" required>
 
-    <input type="text" placeholder="Enter Phone no" name="phone" required>
+    <input type="text" placeholder="Enter Phone no" id = "phone" name="phone" pattern="[7-9]{1}[0-9]{9}"maxlength="10"
+           required autocomplete="off" oninvalid="this.setCustomValidity('Enter Valid Contact No.!')"; oninput="this.setCustomValidity('')" required>
 
-    <input type="text" placeholder="Enter Email id" name="email" required>
+    <input type="email" id="email" placeholder="Enter Email id" required-autocomplete="off" pattern=".+@.+.com"
+           size="30" required>
 
-    <input type="text" placeholder="Enter Address" name="address" required>
+    <input type="text" placeholder="Enter Address" id="address"name="address" required>
 
-    <input type="password" placeholder="Enter Password" name="password" required>
+    <input type="password" placeholder="Enter Password" id="password" name="password" required autocomplete="off"
+           minlength="7" required>
 
     <select name = "type">
        <opton id="selectr" value = "-1">select a Supplier</opton>
        {% for ele in list %}
         <option name = "user_type" value="{{ ele }}">{{ ele }}</option>
       {% endfor %}
-<!--        <option name = "user_type" value="Suppliers">Suppliers</option>-->
+
     </select>
 
     <button type="submit">Sign up</button>
@@ -107,6 +111,5 @@ span.psw {
 </form>
 
 </center>
-
 </body>
 </html>

@@ -7,7 +7,7 @@
 body {font-family: Arial, Helvetica, sans-serif;}
 form {border: 3px solid #f1f1f1;}
 
-input[type=text], input[type=password] {
+input[type=text], input[type=password], input[type=email] {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -68,23 +68,23 @@ span.psw {
 <h2>Supplier signup</h2>
 
   <div class="container">
-    <label for="uname"><b>Username</b></label>
     <input type="text" placeholder="Enter Username" name="username" required>
 
-    <label for="name"><b>Name</b></label>
-    <input type="text" placeholder="Enter name" name="name" required>
+    <input type="text" placeholder="Enter name" id="name" name="name_sup" required autocomplete="off"
+           oninvalid="this.setCustomValidity('Enter Valid Supplier Name')" ; oninput="this.setCustomValidity('')" required>
 
-      <label for="phone"><b>Phone no</b></label>
-    <input type="text" placeholder="Enter Phone no" name="phone" required>
+    <input type="text" placeholder="Enter Phone no" id = "phone" name="phone" pattern="[7-9]{1}[0-9]{9}"maxlength="10"
+           required autocomplete="off" oninvalid="this.setCustomValidity('Enter Valid Contact No.!')";
+           oninput="this.setCustomValidity('')" required>
 
-      <label for="email"><b>Email id</b></label>
-    <input type="text" placeholder="Enter Email id" name="email" required>
+    <input type="email" id="email" placeholder="Enter Email id" required-autocomplete="off" pattern=".+@.+.com"
+           size="30" required>
 
-      <label for="address"><b>Address</b></label>
-    <input type="text" placeholder="Enter Address" name="address" required>
+    <input type="text" placeholder="Enter Address" id="address"name="address" required>
 
-      <label for="password"><b>Password</b></label>
-    <input type="password" placeholder="Enter Password" name="password" required>
+    <input type="password" placeholder="Enter Password" id="password" name="password" required autocomplete="off"
+           minlength="7" required>
+
 
     <button type="submit">Sign up</button>
     <label>

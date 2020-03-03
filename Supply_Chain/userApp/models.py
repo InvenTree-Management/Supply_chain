@@ -14,12 +14,12 @@ class HospitalProfile(models.Model):
 
 class SupplierProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    hospital = models.ManyToManyField(HospitalProfile, null=True, blank=True,)
+    hospital = models.ManyToManyField(HospitalProfile, blank=True, related_name='hospitals')
     phone_no = models.CharField(max_length=100)
     address = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.user.username + '-' + self.phone_no
+        return self.user.username
 
 
 class ItemCategory(models.Model):
