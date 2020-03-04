@@ -14,9 +14,15 @@ class HospitalProfile(models.Model):
 
 class SupplierProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+<<<<<<< HEAD
     hospital = models.ManyToManyField(HospitalProfile, null=True, blank=True)
     phone_no = models.CharField(max_length=100, null=True)
     address = models.CharField(max_length=100, null=True)
+=======
+    hospital = models.ManyToManyField(HospitalProfile, blank=True, related_name='hospitals')
+    phone_no = models.CharField(max_length=100)
+    address = models.CharField(max_length=100)
+>>>>>>> 37079585b75492483cf486084235e43122021e99
 
     def __str__(self):
         return self.user.username
